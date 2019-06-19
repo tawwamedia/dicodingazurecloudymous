@@ -28,7 +28,7 @@
  <?php
     $host = "dicodingappserv.database.windows.net";
     $user = "cloudymous";
-    $pass = "*RmcDwn26#";
+    $pass = "*RmcDwn26";
     $db = "dicodingdb";
     $charset = "SQL_Latin1_General_CP1_CI_AS";
     try {
