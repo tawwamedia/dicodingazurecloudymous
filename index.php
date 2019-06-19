@@ -38,28 +38,28 @@
 					</span>
 				</div>
 
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="post" action="index.php" enctype="multipart/form-data">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<span class="label-input100">Username</span>
-						<input class="input100" type="text" name="username" placeholder="Enter username">
+						<input class="input100" type="text" name="username" id="username" placeholder="Enter username">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<span class="label-input100">Full Name</span>
-						<input class="input100" type="text" name="fullname" placeholder="Enter fullname">
+						<input class="input100" type="text" name="fullname" id="fullname" placeholder="Enter fullname">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<span class="label-input100">Job</span>
-						<input class="input100" type="text" name="job" placeholder="Enter job">
+						<input class="input100" type="text" name="job" id="job" placeholder="Enter job">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 						<span class="label-input100">Departement</span>
-						<input class="input100" type="text" name="departement" placeholder="Enter departement">
+						<input class="input100" type="text" name="departement" id="departement" placeholder="Enter departement">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -75,6 +75,64 @@
 			</div>
 		</div>
 	</div>
+
+	<?php
+    $host = "<Nama server database Anda>";
+    $user = "<Nama admin database Anda>";
+    $pass = "<Password admin database Anda>";
+    $db = "<Nama database Anda>";
+    try {
+        $conn = new PDO("sqlsrv:server = $host; Database = $db", $user, $pass);
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    } catch(Exception $e) {
+        echo "Failed: " . $e;
+    }
+    if (isset($_POST['register'])) {
+        try {
+            $username = $_POST['username'];
+            $fullname = $_POST['fullname'];
+            $job = $_POST['job'];
+            $departement = $_POST['departement'];
+            // Insert data
+            $sql_insert = "INSERT INTO registration (reg_username, reg_fullname, reg_job, reg_department)
+                        VALUES (?,?,?,?)";
+            $stmt = $conn->prepare($sql_insert);
+            $stmt->bindValue(1, $username);
+            $stmt->bindValue(2, $fullname);
+            $stmt->bindValue(3, $job);
+            $stmt->bindValue(4, $departement);
+            $stmt->execute();
+        } catch(Exception $e) {
+            echo "Failed: " . $e;
+        }
+        echo "<h3>Your're registered!</h3>";
+    } else if (isset($_POST['show'])) {
+        try {
+            $sql_select = "SELECT * FROM registration";
+            $stmt = $conn->query($sql_select);
+            $registrants = $stmt->fetchAll();
+            if(count($registrants) > 0) {
+                echo "<h2>People who are registered:</h2>";
+                echo "<table>";
+                echo "<tr><th>Username</th>";
+                echo "<th>Fullname</th>";
+                echo "<th>Job</th>";
+                echo "<th>Departement</th></tr>";
+                foreach($registrants as $registrant) {
+                    echo "<tr><td>".$registrant['reg_username']."</td>";
+                    echo "<td>".$registrant['reg_fullname']."</td>";
+                    echo "<td>".$registrant['reg_job']."</td>";
+                    echo "<td>".$registrant['reg_department']."</td></tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "<h3>No one is currently registered.</h3>";
+            }
+        } catch(Exception $e) {
+            echo "Failed: " . $e;
+        }
+    }
+ ?>
 
 
 <!--===============================================================================================-->
