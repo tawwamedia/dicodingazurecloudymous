@@ -78,15 +78,12 @@
 
 	<?php
     $host = "dicodingappserv.database.windows.net";
-    // $user = "cloudymous";
-    // $pass = "*RmcDwn26#";
-    // $db = "dicodingdb";
-		$connectionInfo = array("Database" => "dicodingdb", "UID" => "cloudymous", "PWD" => "*RmcDwn26#" );
+    $user = "cloudymous";
+    $pass = "*RmcDwn26#";
+    $db = "dicodingdb";
     try {
-        // $conn = new PDO("sqlsrv:Server = $host; Database = $db", $user, $pass);
-        // $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-				$conn = sqlsrv_connect( $host, $connectionInfo);
-
+        $conn = new PDO("sqlsrv:Server = $host; Database = $db", $user, $pass);
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     } catch(Exception $e) {
         echo "Failed: " . $e;
     }
