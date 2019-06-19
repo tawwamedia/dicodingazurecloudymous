@@ -30,7 +30,7 @@
     $user = "cloudymous";
     $pass = "*RmcDwn26#";
     $db = "dicodingdb";
-    $charset = "UTF-8";
+    $charset = "SQL_Latin1_General_CP1_CI_AS";
     try {
         $conn = new PDO("sqlsrv:server = $host; Database = $db", $user, $pass, $charset);
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
