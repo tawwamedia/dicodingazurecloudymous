@@ -82,7 +82,7 @@
     $pass = "*RmcDwn26#";
     $db = "dicodingdb";
     try {
-        $conn = new PDO("sqlsrv:Server = $host; Database = $db", $user, $pass);
+        $conn = new PDO("sqlsrv:Server = $host; Database = $db", "$user", "$pass");
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     } catch(Exception $e) {
         echo "Failed: " . $e;
@@ -120,11 +120,11 @@
                 echo "<th>Departement</th></tr>";
                 foreach($registrants as $registrant) {
                     echo "<tr><td>".$registrant['reg_username']."</td>";
+										echo "</table>";
                     echo "<td>".$registrant['reg_fullname']."</td>";
                     echo "<td>".$registrant['reg_job']."</td>";
                     echo "<td>".$registrant['reg_department']."</td></tr>";
                 }
-                echo "</table>";
             } else {
                 echo "<h3>No one is currently registered.</h3>";
             }
