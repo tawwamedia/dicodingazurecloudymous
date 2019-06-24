@@ -18,7 +18,7 @@
  <body>
  <h1>Register here!</h1>
  <p>Fill in your name and email address, then click <strong>Submit</strong> to register.</p>
- <form method="post" action="index.php" enctype="multipart/form-data" >
+ <form method="post" action="example.php" enctype="multipart/form-data" >
        Username  <input type="text" name="username" id="username"/></br></br>
        Fullname <input type="text" name="fullname" id="fullname"/></br></br>
        Job <input type="text" name="job" id="job"/></br></br>
