@@ -77,27 +77,26 @@
 	</div>
 
 	<?php
-    $host = "dicodingappserv.database.windows.net";
     // $user = "cloudymous";
     // $pass = "*RmcDwn26#";
     // $db = "dicodingdb";
-		$connectionInfo = array ("Database" => "dicodingdb",
-															"UID" => "cloudymous",
-															"PWD" => "*RmcDwn26#");
-		$conn = sqlsrv_connect ($host, $connectionInfo);
-		if ($conn) {
-			echo "Connect";
-		} else {
-			echo "Disconnect";
-			die (print_r(sqlsrv_errors(), true));
+
+		// PHP Data Objects(PDO) Sample Code:
+		try {
+		    $conn = new PDO("sqlsrv:server = tcp:cloudymousappserv.database.windows.net,1433; Database = dicodingdb", "cloudymous", "*RmcDwn26#");
+		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
-    // try {
-    //     // $conn = new PDO("sqlsrv:Server = $host; Database = $db", $user, $pass);
-    //     // $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-		// 		$conn = sqlsrv_connect ($host, $connectionInfo);
-    // } catch(Exception $e) {
-    //     echo "Failed: " . $e;
-    // }
+		catch (PDOException $e) {
+		    print("Error connecting to SQL Server.");
+		    die(print_r($e));
+		}
+
+		// SQL Server Extension Sample Code:
+		$connectionInfo = array("UID" => "cloudymous@cloudymousappserv", "pwd" => "*RmcDwn26#", "Database" => "dicodingdb", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+		$serverName = "tcp:cloudymousappserv.database.windows.net,1433";
+		$conn = sqlsrv_connect($serverName, $connectionInfo);
+
+
     // if (isset($_POST['register'])) {
     //     try {
     //         $username = $_POST['username'];
