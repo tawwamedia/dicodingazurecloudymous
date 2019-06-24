@@ -96,52 +96,51 @@
 		$serverName = "tcp:cloudymousappserv.database.windows.net,1433";
 		$conn = sqlsrv_connect($serverName, $connectionInfo);
 
-
-    if (isset($_POST['register'])) {
-        try {
-            $username = $_POST['username'];
-            $fullname = $_POST['fullname'];
-            $job = $_POST['job'];
-            $departement = $_POST['departement'];
-            // Insert data
-            $sql_insert = "INSERT INTO registration (reg_username, reg_fullname, reg_job, reg_department)
-                        VALUES (?,?,?,?)";
-            $stmt = $conn->prepare($sql_insert);
-            $stmt->bindValue(1, $username);
-            $stmt->bindValue(2, $fullname);
-            $stmt->bindValue(3, $job);
-            $stmt->bindValue(4, $departement);
-            $stmt->execute();
-        } catch(Exception $e) {
-            echo "Failed: " . $e;
-        }
-        echo "<h3>Your're registered!</h3>";
-    } else if (isset($_POST['show'])) {
-        try {
-            $sql_select = "SELECT * FROM registration";
-            $stmt = $conn->query($sql_select);
-            $registrants = $stmt->fetchAll();
-            if(count($registrants) > 0) {
-                echo "<h2>People who are registered:</h2>";
-                echo "<table>";
-                echo "<tr><th>Username</th>";
-                echo "<th>Fullname</th>";
-                echo "<th>Job</th>";
-                echo "<th>Departement</th></tr>";
-                foreach($registrants as $registrant) {
-                    echo "<tr><td>".$registrant['reg_username']."</td>";
-										echo "</table>";
-                    echo "<td>".$registrant['reg_fullname']."</td>";
-                    echo "<td>".$registrant['reg_job']."</td>";
-                    echo "<td>".$registrant['reg_department']."</td></tr>";
-                }
-            } else {
-                echo "<h3>No one is currently registered.</h3>";
-            }
-        } catch(Exception $e) {
-            echo "Failed: " . $e;
-        }
-    }
+    // if (isset($_POST['register'])) {
+    //     try {
+    //         $username = $_POST['username'];
+    //         $fullname = $_POST['fullname'];
+    //         $job = $_POST['job'];
+    //         $departement = $_POST['departement'];
+    //         // Insert data
+    //         $sql_insert = "INSERT INTO registration (reg_username, reg_fullname, reg_job, reg_department)
+    //                     VALUES (?,?,?,?)";
+    //         $stmt = $conn->prepare($sql_insert);
+    //         $stmt->bindValue(1, $username);
+    //         $stmt->bindValue(2, $fullname);
+    //         $stmt->bindValue(3, $job);
+    //         $stmt->bindValue(4, $departement);
+    //         $stmt->execute();
+    //     } catch(Exception $e) {
+    //         echo "Failed: " . $e;
+    //     }
+    //     echo "<h3>Your're registered!</h3>";
+    // } else if (isset($_POST['show'])) {
+    //     try {
+    //         $sql_select = "SELECT * FROM registration";
+    //         $stmt = $conn->query($sql_select);
+    //         $registrants = $stmt->fetchAll();
+    //         if(count($registrants) > 0) {
+    //             echo "<h2>People who are registered:</h2>";
+    //             echo "<table>";
+    //             echo "<tr><th>Username</th>";
+    //             echo "<th>Fullname</th>";
+    //             echo "<th>Job</th>";
+    //             echo "<th>Departement</th></tr>";
+    //             foreach($registrants as $registrant) {
+    //                 echo "<tr><td>".$registrant['reg_username']."</td>";
+		// 								echo "</table>";
+    //                 echo "<td>".$registrant['reg_fullname']."</td>";
+    //                 echo "<td>".$registrant['reg_job']."</td>";
+    //                 echo "<td>".$registrant['reg_department']."</td></tr>";
+    //             }
+    //         } else {
+    //             echo "<h3>No one is currently registered.</h3>";
+    //         }
+    //     } catch(Exception $e) {
+    //         echo "Failed: " . $e;
+    //     }
+    // }
  ?>
 
 
