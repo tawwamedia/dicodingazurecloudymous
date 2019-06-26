@@ -63,13 +63,15 @@
 							Send
 						</span>
 					</button>
+				</div>
+				<div class="container-contact100-form-btn">
 					<button type="submit" name="show" class="contact100-form-btn">
 						<span>
 							<i class="fa fa-paper-plane-o m-r-6" aria-hidden="true"></i>
 							Show Message
 						</span>
 					</button>
-				</div>
+				</div
 			</form>
 		</div>
 	</div>
@@ -151,7 +153,7 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<!-- <script src="js/main.js"></script> -->
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
