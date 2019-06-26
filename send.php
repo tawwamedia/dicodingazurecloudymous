@@ -31,7 +31,7 @@
 	<div class="container-contact100">
 
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form method="post" action="send.php" enctype="multipart/form-data" class="contact100-form validate-form">
 				<span class="contact100-form-title">
 					Send Us A Message
 				</span>
