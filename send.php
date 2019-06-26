@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Contact V10</title>
+	<title>Send Message</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -37,30 +37,36 @@
 				</span>
 
 				<div class="wrap-input100 validate-input" data-validate="Please enter your name">
-					<input class="input100" type="text" name="name" placeholder="Full Name">
+					<input class="input100" type="text" name="name" id="name" placeholder="Full Name">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 validate-input" data-validate = "Please enter your email: e@a.x">
-					<input class="input100" type="text" name="email" placeholder="E-mail">
+					<input class="input100" type="text" name="email" id="email" placeholder="E-mail">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 validate-input" data-validate = "Please enter your phone">
-					<input class="input100" type="text" name="phone" placeholder="Phone">
+					<input class="input100" type="text" name="phone" id="phone" placeholder="Phone">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 validate-input" data-validate = "Please enter your message">
-					<textarea class="input100" name="message" placeholder="Your Message"></textarea>
+					<textarea class="input100" name="message" id="message" placeholder="Your Message"></textarea>
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
+					<button type="submit" name="send" class="contact100-form-btn">
 						<span>
 							<i class="fa fa-paper-plane-o m-r-6" aria-hidden="true"></i>
 							Send
+						</span>
+					</button>
+					<button type="submit" name="show" class="contact100-form-btn">
+						<span>
+							<i class="fa fa-paper-plane-o m-r-6" aria-hidden="true"></i>
+							Show Message
 						</span>
 					</button>
 				</div>
@@ -68,7 +74,65 @@
 		</div>
 	</div>
 
+<?php
 
+	try {
+			$conn = new PDO("sqlsrv:server = tcp:cloudymousappserv.database.windows.net,1433; Database = dicodingdb", "cloudymous", "imran*01");
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+	catch (PDOException $e) {
+			print("Error connecting to SQL Server.");
+			die(print_r($e));
+	}
+	if (isset($_POST['send'])) {
+		try {
+			$name = $_POST['name'];
+			$email = $_POST['email'];
+			$phone = $_POST['phone'];
+			$message = $_POST['message'];
+
+			$sql_insert = "INSERT INTO message (message_fullname, message_email, message_phone, message_body)
+										VALUES (?,?,?,?)";
+			$stmt = $conn->prepare($sql_insert);
+			  $stmt->bindValue(1, $name);
+				$stmt->bindValue(2, $email);
+				$stmt->bindValue(3, $phone);
+				$stmt->bindValue(4, $message);
+				$stmt->execute();
+		} catch(Exception $e) {
+				echo "Failed: " . $e;
+		}
+		echo "<h3>Your Message Send</h3>";
+	} elseif (isset($_POST['show'])) {
+			try {
+				$sql_select = "SELECT * FROM message";
+				$stmt = $conn->query($sql_select);
+				$messages = $stmt->fetchAll();
+				if(count($messages) > 0) {
+					echo "<h2>Message Received:</h2>";
+					echo "<table>";
+					echo "<tr><th>Name</th>";
+					echo "<th>Email</th>";
+					echo "<th>Phone</th>";
+					echo "<th>Message</th></tr>";
+					foreach ($messages as $message) {
+						echo "<tr><td>".$message['message_fullname']."</td>";
+						echo "<td>".$message['message_email']."</td>";
+						echo "<td>".$message['message_phone']."</td>";
+						echo "<td>".$message['message_body']."</td></tr>";
+					}
+					echo "</table>";
+				} else {
+						echo "<h3>No message!.</h3>";
+				}
+			} catch (\Exception $e) {
+				echo "Failed: " . $e;
+			}
+
+	}
+
+
+ ?>
 
 	<div id="dropDownSelect1"></div>
 
